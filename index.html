@@ -1,9 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Untitled</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8" />
+  <title>Xiao's Reveal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: Georgia, serif;
+      scroll-behavior: smooth;
+      background-color: black;
+      color: white;
+    }
+
+    #canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+    }
+
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 3rem 1rem;
+      color: white;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .line {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 1.5s ease forwards;
+      margin: 1em 0;
+    }
+
+    .line:nth-of-type(1) { animation-delay: 0.5s; font-size: 1.6rem; font-weight: bold; }
+    .line:nth-of-type(2) { animation-delay: 1.2s; }
+    .line:nth-of-type(3) { animation-delay: 2.0s; }
+    .line:nth-of-type(4) { animation-delay: 2.8s; }
+    .line:nth-of-type(5) { animation-delay: 3.5s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal-section {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, black 50%, #f5f7f3 50%);
+      transition: background 1s ease;
+    }
+
+    .reveal-text {
+      font-size: 1.4rem;
+      text-align: center;
+      max-width: 700px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    .reveal-section.visible .reveal-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .followup-section {
+      background-color: #f5f7f3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh;
+      padding: 3rem 1rem;
+      color: black;
+      text-align: center;
+    }
+
+    .followup-text {
+      font-size: 1.6rem;
+      max-width: 700px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    .followup-section.visible .followup-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-label {
+      font-size: 1rem;
+      margin-top: 1.5rem;
+      color: white;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 1s ease;
+    }
+
+    .reveal-section.visible .reveal-label,
+    .followup-section.visible .reveal-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
@@ -13,23 +134,113 @@
     <p class="line">Like a cloud chamber,</p>
     <p class="line">I reveal trails of unmet needs and subtle gestures in design.</p>
     <p class="line">I’m not just solving; I’m revealing.</p>
-    <p class="line scroll-hint">Scroll to Reveal</p> <!-- ✅ 新增提示行 -->
+    <p class="line">Scroll to Reveal</p>
   </div>
 
   <section class="reveal-section">
-    <p class="reveal-text small-text">
-      <span class="dark-part">From darkness I observe,</span>
-      <span class="light-part">through light I reveal.</span>
-    </p>
-  </section>
-
-  <section class="followup-section">
-    <div class="followup-container">
-      <p class="followup-text fade-in">Let’s explore the human side of technology.</p>
-      <p class="followup-text scroll-hint fade-in-delay">Scroll to Reveal</p>
+    <div>
+      <p class="reveal-text">From darkness I observe, through light I reveal.</p>
+      <p class="reveal-label">Scroll to Reveal</p>
     </div>
   </section>
 
-  <script src="./script.js"></script>
+  <section class="followup-section">
+    <p class="followup-text">Let’s explore the human side of technology.</p>
+    <p class="reveal-label">Scroll to Reveal</p>
+  </section>
+
+  <script>
+    // === Canvas particles ===
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+    const particles = [];
+
+    class Particle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.history = [];
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = 1 + Math.random() * 1.5;
+      }
+
+      update() {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < 300) {
+          this.angle = Math.atan2(dy, dx);
+          this.speed = 1.8;
+        } else {
+          this.speed = 0.8;
+        }
+
+        this.history.push({ x: this.x, y: this.y });
+        if (this.history.length > 50) this.history.shift();
+
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed;
+        this.angle += (Math.random() - 0.5) * 0.2;
+      }
+
+      draw(ctx) {
+        ctx.beginPath();
+        for (let i = 0; i < this.history.length - 1; i++) {
+          ctx.moveTo(this.history[i].x, this.history[i].y);
+          ctx.lineTo(this.history[i + 1].x, this.history[i + 1].y);
+        }
+        ctx.strokeStyle = "rgba(255,255,255,0.5)";
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+      }
+    }
+
+    for (let i = 0; i < 60; i++) {
+      particles.push(
+        new Particle(
+          Math.random() * canvas.width,
+          Math.random() * canvas.height
+        )
+      );
+    }
+
+    window.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function animate() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p) => {
+        p.update();
+        p.draw(ctx);
+      });
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // === Reveal on scroll ===
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, {
+      threshold: 0.3,
+    });
+
+    document.querySelectorAll(".reveal-section, .followup-section").forEach((section) => {
+      observer.observe(section);
+    });
+  </script>
 </body>
 </html>
