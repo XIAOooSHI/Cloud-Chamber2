@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Untitled</title>
-  <link rel="stylesheet" href="./style.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-html <canvas id="canvas"></canvas>
-
 <div class="text-container">
   <p class="line">I'm Xiao. I trace the invisible.</p>
   <p class="line">Like a cloud chamber,</p>
   <p class="line">I reveal trails of unmet needs and subtle gestures in design.</p>
   <p class="line">I’m not just solving; I’m revealing.</p>
+  <p class="line scroll-hint">Scroll to Reveal</p> <!-- ✅ 插入 -->
 </div>
 
-
 <section class="reveal-section">
-  <p class="reveal-text">
+  <p class="reveal-text small-text"> <!-- ✅ 添加 small-text class 缩小字体 -->
     <span class="dark-part">From darkness I observe,</span>
     <span class="light-part">through light I reveal.</span>
   </p>
 </section>
 
 <section class="followup-section">
-  <p class="followup-text">Let’s explore the human side of technology.</p>
+  <div class="followup-container">
+    <p class="followup-text fade-in">Let’s explore the human side of technology.</p> <!-- ✅ 添加 fade-in -->
+    <p class="followup-text scroll-hint fade-in-delay">Scroll to Reveal</p> <!-- ✅ 插入 Scroll 提示 -->
+  </div>
 </section>
-<!-- partial -->
-  <script  src="./script.js"></script>
-
-</body>
-</html>
