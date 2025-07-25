@@ -1,91 +1,33 @@
-// === Canvas particles ===
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-const particles = [];
-
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.history = [];
-    this.angle = Math.random() * Math.PI * 2;
-    this.speed = 1 + Math.random() * 1.5;
-  }
-
-  update() {
-    const dx = mouse.x - this.x;
-    const dy = mouse.y - this.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist < 300) {
-      this.angle = Math.atan2(dy, dx);
-      this.speed = 1.8;
-    } else {
-      this.speed = 0.8;
-    }
-
-    this.history.push({ x: this.x, y: this.y });
-    if (this.history.length > 50) this.history.shift();
-
-    this.x += Math.cos(this.angle) * this.speed;
-    this.y += Math.sin(this.angle) * this.speed;
-    this.angle += (Math.random() - 0.5) * 0.2;
-  }
-
-  draw(ctx) {
-    ctx.beginPath();
-    for (let i = 0; i < this.history.length - 1; i++) {
-      ctx.moveTo(this.history[i].x, this.history[i].y);
-      ctx.lineTo(this.history[i + 1].x, this.history[i + 1].y);
-    }
-    ctx.strokeStyle = "rgba(255,255,255,0.5)";
-    ctx.lineWidth = 0.7;
-    ctx.stroke();
-  }
+/* ✅ Scroll to Reveal 样式统一 */
+.scroll-hint {
+  font-size: 1rem;
+  color: white;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.5s ease forwards;
+  animation-delay: 3.6s; /* 要比前一句晚 */
+  margin-top: 1em;
+  z-index: 0; /* 确保处于底层 */
 }
 
-for (let i = 0; i < 60; i++) {
-  particles.push(
-    new Particle(
-      Math.random() * canvas.width,
-      Math.random() * canvas.height
-    )
-  );
+/* ✅ 缩小 reveal-section 的文字 */
+.small-text {
+  font-size: 1.3rem;
 }
 
-window.addEventListener("mousemove", (e) => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-function animate() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  particles.forEach((p) => {
-    p.update();
-    p.draw(ctx);
-  });
-
-  requestAnimationFrame(animate);
+/* ✅ followup 渐显动效 */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1.5s ease forwards;
+  animation-delay: 0.5s;
 }
-animate();
 
-// === Reveal on scroll ===
-const observer = new IntersectionObserver(
-  ([entry]) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
-  },
-  {
-    threshold: 0.5,
-  }
-);
+.fade-in-delay {
+  animation-delay: 1.5s;
+}
 
-const section = document.querySelector(".reveal-section");
-observer.observe(section);
+/* ✅ 如果你希望 Scroll to Reveal 在白底上是黑色： */
+.followup-text.scroll-hint {
+  color: #111;
+}
