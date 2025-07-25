@@ -87,5 +87,6 @@ const observer = new IntersectionObserver(
   }
 );
 
-const section = document.querySelector(".reveal-section");
-observer.observe(section);
+document.querySelectorAll(".reveal-section, .followup-section").forEach(section => {
+  observer.observe(section);
+});
