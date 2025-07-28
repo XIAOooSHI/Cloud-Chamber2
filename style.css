@@ -25,16 +25,19 @@ html, body {
 .text-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: center;      /* 垂直居中 */
+  align-items: center;          /* 水平居中 */
   min-height: 100vh;
-  padding: 3rem 1rem;
+  padding: 0 1rem;              /* 移除顶部padding */
   color: white;
   text-align: center;
   position: relative;
   z-index: 1;
 }
 
+.text-container > * {
+  margin: 0.5rem 0;             /* 控制段落间距 */
+}
 .line {
   opacity: 0;
   transform: translateY(20px);
