@@ -136,12 +136,9 @@ html, body {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 1.5s ease forwards;
-  animation-delay: 2.5s;
+  animation-delay: 6.5s;
 }
 
-.fade-in-delay {
-  animation-delay: 2.5s;
-}
 
 /* 动画关键帧 */
 @keyframes fadeInUp {
