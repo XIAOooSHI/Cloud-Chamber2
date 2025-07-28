@@ -96,22 +96,22 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, black 50%, #f5f7f3 50%);
+  background: linear-gradient(to bottom, black 50%, #fffffff 100%);
   transition: background 1s ease;
 }
 
 .reveal-section.visible {
-  background: linear-gradient(to bottom, black 50%, #f5f7f3 50%);
+  background: linear-gradient(to bottom, black 50%, #ffffff 10%);
 }
 
 /* ===== Follow-up section ===== */
 .followup-section {
-  background-color: #f5f7f3;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 10vh;
-  padding: 2rem 1rem;
+  min-height: 30vh;
+  padding: 4rem 1rem;
 }
 
 .followup-container {
