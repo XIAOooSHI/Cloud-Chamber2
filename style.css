@@ -88,7 +88,7 @@ html, body {
 
 .light-part {
   color: black;
-  background-color: #f5f7f3;
+  background-color: #fffffff;
   padding-left: 0.5em;
 }
 
@@ -96,22 +96,23 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, black 50%, #fffffff 100%);
+  background: linear-gradient(to bottom, black 50%, #f5f7f3 100%);
   transition: background 1s ease;
 }
 
 .reveal-section.visible {
-  background: linear-gradient(to bottom, black 50%, #ffffff 10%);
+  background: linear-gradient(to bottom, black 40%, #f8f8f4 60%);
 }
 
 /* ===== Follow-up section ===== */
 .followup-section {
-  background-color: #ffffff;
+  background-color:  #f5f7f3;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 30vh;
-  padding: 4rem 1rem;
+  margin-bottom: 4rem;
+  min-height: auto; 
+  padding: 6rem 1rem;
 }
 
 .followup-container {
