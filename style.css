@@ -142,4 +142,10 @@ html, body {
   50% { transform: translateY(8px); }
 }
 
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
