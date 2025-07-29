@@ -109,47 +109,33 @@ html, body {
 
 /* ===== Follow-up section ===== */
 .followup-section {
-  background-color:  #f5f7f3;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 4rem;
-  min-height: auto; 
+  background-color: #f5f7f3;
   padding: 6rem 1rem;
+  margin-bottom: 4rem;
 }
 
 .followup-container {
+  max-width: 720px;
+  margin: 0 auto;
   text-align: center;
 }
 
 .followup-text {
   font-size: 1.6rem;
-  font-family:'EB Garamond', 'Playfair Display', serif;
+  font-family: 'EB Garamond', 'Playfair Display', serif;
   color: #111;
   max-width: 700px;
   margin: 1em auto;
-  min-height: 1vh;
-}
-
-/* Fade-in animation */
-.fade-in {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 1.5s ease forwards;
   animation-delay: 5.5s;
 }
 
-
-/* 动画关键帧 */
+/* 动画 */
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.highlight {
-  background-color: black;
-  color: white;
-  padding: 0.1em 0.3em;
 }
